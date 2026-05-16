@@ -1,0 +1,1242 @@
+// Development Schema - SQLite
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============= ENUMS =============
+
+enum UserRole {
+  USER
+  SARAF
+  BRANCH_MANAGER
+  BRANCH_STAFF
+  ADMIN
+}
+
+enum VIPLevel {
+  NONE
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+}
+
+enum PackageType {
+  PRO
+  PREMIUM
+  ENTERPRISE
+}
+
+enum SarafStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum TransactionStatus {
+  PENDING
+  WITHDRAWN
+  COMPLETED
+  CANCELLED
+}
+
+enum TransactionType {
+  HAWALA
+  HAWALA_REQUEST
+  EXCHANGE
+  CRYPTO
+}
+
+// ============= USER MODEL =============
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  phone             String?  @unique
+  password          String
+  name              String
+  avatarUrl         String?
+  role              UserRole @default(USER)
+  isActive          Boolean  @default(true)
+  isVerified        Boolean  @default(false)
+  isEmailVerified   Boolean  @default(false)
+  isPhoneVerified   Boolean  @default(false)
+  
+  // VIP System
+  vipLevel          VIPLevel @default(NONE)
+  totalTransactions Int      @default(0)
+  vipPoints         Int      @default(0)
+  vipExpiry         DateTime?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastLogin         DateTime?
+  referralCode      String?
+  referredById      String?
+  
+  // Relations
+  saraf                    Saraf?
+  transactions             Transaction[]
+  chartDrawings            ChartDrawing[]
+  chartLayouts             ChartLayout[]
+  watchlists               UserWatchlist[]
+  chartAlerts              ChartAlert[]
+  notifications            Notification[]
+  chatSessions             ChatSession[]
+  courseEnrollments        UserCourseEnrollment[]
+  lessonProgress           UserLessonProgress[]
+  sarafRatings             SarafRating[]
+  managedBranches          SarafBranch[] @relation("BranchManager")
+  branchStaff              BranchStaff[]
+  internalChatParticipants InternalChatParticipant[]
+  sentInternalMessages     InternalChatMessage[] @relation("InternalChatMessageSender")
+  deletedInternalMessages  InternalChatMessage[] @relation("InternalChatMessageDeletedBy")
+  internalChatMessageReactions InternalChatMessageReaction[]
+  portalStories            PortalStory[]
+  portalStoryLikes         PortalStoryLike[]
+  viewedPortalStories      PortalStoryView[]
+  sentPortalConnectionRequests     PortalConnectionRequest[] @relation("PortalConnectionRequester")
+  receivedPortalConnectionRequests PortalConnectionRequest[] @relation("PortalConnectionTarget")
+  rewards                  UserReward[]
+  usedDiscountCodes        DiscountCodeUsage[]
+  favorites                UserFavorite[]
+  transactionShares        TransactionShare[]
+  referredBy               User?         @relation("UserReferrals", fields: [referredById], references: [id])
+  referrals                User[]        @relation("UserReferrals")
+  termsAcceptances         TermsAcceptance[]
+  
+  @@index([role, isActive])
+  @@index([createdAt])
+  @@index([lastLogin])
+  @@index([referralCode])
+  @@index([referredById])
+  @@map("users")
+}
+
+model TermsAcceptance {
+  id          String   @id @default(cuid())
+  userId      String
+  documentKey String
+  acceptedAt  DateTime @default(now())
+  ipAddress   String?
+  userAgent   String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, documentKey])
+  @@index([userId, acceptedAt])
+  @@map("terms_acceptances")
+}
+
+// ============= SARAF MODEL =============
+
+model Saraf {
+  id                 String      @id @default(cuid())
+  userId             String      @unique
+  businessName       String
+  businessAddress    String
+  businessPhone      String
+  licenseNumber      String?
+  taxNumber          String?
+  status             SarafStatus @default(PENDING)
+  isActive           Boolean     @default(true)
+  isPremium          Boolean     @default(false)
+  premiumExpiry      DateTime?
+  isFeatured         Boolean     @default(false)
+  rating             Float       @default(0)
+  totalTransactions  Int         @default(0)
+  creditBalance      Int         @default(0)
+  hawalaFeePercent   Float?
+  exchangeFeePercent Float?
+  subscriptionType   String      @default("BASIC")
+  subscriptionExpiry DateTime?
+  // Optional per-saraf subscription pricing override map, e.g. { "PRO": 50, "PREMIUM": 120 }
+  subscriptionPriceOverrides Json?
+  // Optional per-saraf promotion pricing override map, e.g. { "PREMIUM": { "30": 5000 }, "FEATURED": { "7": 1500 } }
+  promotionPriceOverrides    Json?
+  
+  // Free Trial System (3 months)
+  isOnFreeTrial      Boolean     @default(true)
+  freeTrialStartDate DateTime?   @default(now())
+  freeTrialEndDate   DateTime?
+  
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  
+  // Relations
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rates              Rate[]
+  transactions       Transaction[]
+  documents          Document[]
+  branches           SarafBranch[]
+  promotionRequests  PromotionRequest[]
+  ratings            SarafRating[]
+  creditTransactions CreditTransaction[]
+  subscriptions      Subscription[]
+  advertisements     Advertisement[]
+  internalChats      InternalChat[]
+  chatSessions       ChatSession[]
+  guestChatSessions  GuestChatSession[]
+  favoritedBy        UserFavorite[]
+  blacklists         Blacklist[]
+  
+  @@index([status, isActive])
+  @@index([isFeatured, isActive])
+  @@index([rating])
+  @@index([createdAt])
+  @@map("sarafs")
+}
+
+// ============= BRANCH MODEL =============
+
+model SarafBranch {
+  id        String   @id @default(cuid())
+  sarafId   String
+  name      String
+  address   String
+  city      String
+  country   String   @default("Afghanistan")
+  phone     String
+  managerId String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  saraf                   Saraf           @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  manager                 User?           @relation("BranchManager", fields: [managerId], references: [id])
+  staff                   BranchStaff[]
+  originTransactions      Transaction[]   @relation("OriginBranch")
+  destinationTransactions Transaction[]   @relation("DestinationBranch")
+  
+  @@index([sarafId, isActive])
+  @@index([city, isActive])
+  @@map("saraf_branches")
+}
+
+// ============= BRANCH STAFF MODEL =============
+
+model BranchStaff {
+  id        String   @id @default(cuid())
+  branchId  String
+  userId    String
+  role      String   // "MANAGER", "CASHIER", "OPERATOR"
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  
+  // Relations
+  branch SarafBranch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([branchId, userId])
+  @@map("branch_staff")
+}
+
+// ============= TRANSACTION MODEL =============
+
+model Transaction {
+  id                  String            @id @default(cuid())
+  referenceCode       String            @unique
+  type                TransactionType
+  status              TransactionStatus @default(PENDING)
+  
+  // Parties
+  senderId            String?
+  receiverId          String?
+  sarafId             String
+  originBranchId      String?
+  destinationBranchId String?
+  
+  // Guest Transaction (without user account)
+  isGuestTransaction  Boolean           @default(false)
+  guestEmail          String?
+  guestTrackingToken  String?
+  
+  // Transaction Details
+  fromCurrency        String
+  toCurrency          String
+  fromAmount          Float
+  toAmount            Float
+  rate                Float
+  systemCommission    Float             @default(0)
+  sarafCommission     Float             @default(0)
+  totalCommission     Float             @default(0)
+  systemDiscountAmount Float            @default(0)
+  waivedSystemCommission Float          @default(0)
+  systemFeeWaiverReason String?
+  appliedRewardId     String?
+  creditsDeducted     Int               @default(0)
+  
+  // Location Details
+  senderCountry       String?
+  senderCity          String?
+  receiverCountry     String            @default("Afghanistan")
+  receiverCity        String
+  
+  // Customer Information
+  senderName          String
+  senderPhone         String
+  receiverName        String
+  receiverPhone       String
+  
+  // Additional Information
+  notes               String?
+  internalNotes       String?
+  paidBy              String?
+  paidAt              DateTime?
+  completedAt         DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  
+  // Relations
+  sender            User?       @relation(fields: [senderId], references: [id])
+  saraf             Saraf       @relation(fields: [sarafId], references: [id])
+  originBranch      SarafBranch? @relation("OriginBranch", fields: [originBranchId], references: [id])
+  destinationBranch SarafBranch? @relation("DestinationBranch", fields: [destinationBranchId], references: [id])
+  shares            TransactionShare[]
+  
+  @@index([sarafId, status])
+  @@index([status, createdAt])
+  @@index([referenceCode])
+  @@index([guestTrackingToken])
+  @@index([createdAt])
+  @@map("transactions")
+}
+
+// ============= COMMISSION SETTINGS MODEL =============
+
+model CommissionSetting {
+  id                 String   @id @default(cuid())
+  type               String   // "HAWALA" or "EXCHANGE"
+  minAmount          Float
+  maxAmount          Float?
+  systemRate         Float
+  suggestedSarafRate Float?
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  
+  @@unique([type, minAmount])
+  @@map("commission_settings")
+}
+
+// ============= CREDIT TRANSACTION MODEL =============
+
+model CreditTransaction {
+  id             String   @id @default(cuid())
+  sarafId        String
+  type           String   // "PURCHASE", "USAGE", "REFUND", "BONUS", "MANUAL"
+  amount         Int
+  balance        Int
+  price          Float?
+  description    String?
+  status         String   @default("PENDING") // "PENDING", "APPROVED", "REJECTED"
+  paymentMethod  String?  // "CASH", "BANK", "CARD", "USDT"
+  paymentProof   String?
+  discountCode   String?
+  discountAmount Float?
+  approvedBy     String?
+  approvedAt     DateTime?
+  createdAt      DateTime @default(now())
+  
+  // Relations
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@index([sarafId, status])
+  @@index([status, createdAt])
+  @@map("credit_transactions")
+}
+
+// ============= SUBSCRIPTION MODEL =============
+
+model Subscription {
+  id          String   @id @default(cuid())
+  sarafId     String
+  packageType String   // "PRO", "PREMIUM", "ENTERPRISE"
+  status      String   @default("PENDING") // "PENDING", "ACTIVE", "EXPIRED", "CANCELLED"
+  startDate   DateTime?
+  endDate     DateTime?
+  autoRenew   Boolean  @default(false)
+  price       Int
+  requestedAt DateTime @default(now())
+  approvedBy  String?
+  approvedAt  DateTime?
+  
+  // Relations
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@index([sarafId, status])
+  @@index([status, endDate])
+  @@map("subscriptions")
+}
+
+// ============= ADVERTISEMENT MODEL =============
+
+model Advertisement {
+  id          String   @id @default(cuid())
+  sarafId     String
+  position    String   // "HERO", "FEATURED", "SIDEBAR", "FOOTER"
+  title       String
+  description String?
+  imageUrl    String?
+  linkUrl     String?
+  duration    Int
+  price       Int
+  status      String   @default("PENDING") // "PENDING", "ACTIVE", "EXPIRED", "REJECTED"
+  startDate   DateTime?
+  endDate     DateTime?
+  impressions Int      @default(0)
+  clicks      Int      @default(0)
+  requestedAt DateTime @default(now())
+  approvedBy  String?
+  approvedAt  DateTime?
+  
+  // Relations
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@index([status, startDate, endDate])
+  @@index([position, status])
+  @@map("advertisements")
+}
+
+// ============= DISCOUNT CODE MODEL =============
+
+model DiscountCode {
+  id              String              @id @default(cuid())
+  code            String              @unique
+  type            String              // "PERCENTAGE", "FIXED"
+  value           Float
+  maxDiscount     Int?
+  maxUses         Int?
+  usedCount       Int                 @default(0)
+  validFrom       DateTime
+  validUntil      DateTime
+  isActive        Boolean             @default(true)
+  specificSarafId String?
+  vipLevelOnly    VIPLevel?           // Only for specific VIP level
+  createdBy       String
+  createdAt       DateTime            @default(now())
+  
+  usages          DiscountCodeUsage[]
+  
+  @@index([code, isActive])
+  @@index([validFrom, validUntil, isActive])
+  @@map("discount_codes")
+}
+
+// ============= DISCOUNT CODE USAGE MODEL =============
+
+model DiscountCodeUsage {
+  id             String   @id @default(cuid())
+  codeId         String
+  userId         String
+  transactionId  String?
+  discountAmount Float
+  usedAt         DateTime @default(now())
+  
+  code DiscountCode @relation(fields: [codeId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("discount_code_usages")
+}
+
+// ============= OTP MODEL =============
+
+model OTP {
+  id         String   @id @default(cuid())
+  identifier String   // email or phone
+  code       String
+  type       String   // "EMAIL", "SMS", "WHATSAPP"
+  purpose    String   // "SIGNUP", "LOGIN", "RESET_PASSWORD"
+  attempts   Int      @default(0)
+  isUsed     Boolean  @default(false)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  
+  @@index([identifier, purpose, isUsed, expiresAt])
+  @@index([identifier, createdAt])
+  @@index([createdAt])
+  @@map("otps")
+}
+
+// ============= INTERNAL CHAT MODEL =============
+
+model InternalChat {
+  id        String   @id @default(cuid())
+  sarafId   String
+  type      String   // "BRANCH_TO_BRANCH", "GROUP", "DIRECT"
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  saraf        Saraf                     @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  messages     InternalChatMessage[]
+  participants InternalChatParticipant[]
+  
+  @@map("internal_chats")
+}
+
+// ============= INTERNAL CHAT MESSAGE MODEL =============
+
+model InternalChatMessage {
+  id         String   @id @default(cuid())
+  chatId     String
+  senderId   String
+  senderName String
+  message    String
+  fileUrl    String?
+  fileName   String?
+  replyToId  String?
+  forwardedFromId String?
+  deletedAt  DateTime?
+  deletedById String?
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  
+  // Relations
+  chat   InternalChat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender User         @relation("InternalChatMessageSender", fields: [senderId], references: [id])
+  replyTo InternalChatMessage? @relation("InternalChatMessageReply", fields: [replyToId], references: [id], onDelete: SetNull)
+  replies InternalChatMessage[] @relation("InternalChatMessageReply")
+  forwardedFrom InternalChatMessage? @relation("InternalChatMessageForward", fields: [forwardedFromId], references: [id], onDelete: SetNull)
+  forwards InternalChatMessage[] @relation("InternalChatMessageForward")
+  deletedBy User? @relation("InternalChatMessageDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull)
+  reactions InternalChatMessageReaction[]
+  
+  @@map("internal_chat_messages")
+}
+
+model InternalChatMessageReaction {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  emoji     String
+  createdAt DateTime @default(now())
+
+  message InternalChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@map("internal_chat_message_reactions")
+}
+
+// ============= INTERNAL CHAT PARTICIPANT MODEL =============
+
+model InternalChatParticipant {
+  id        String   @id @default(cuid())
+  chatId    String
+  userId    String
+  branchId  String?
+  lastSeen  DateTime?
+  createdAt DateTime @default(now())
+  
+  // Relations
+  chat InternalChat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([chatId, userId])
+  @@map("internal_chat_participants")
+}
+
+model PortalStory {
+  id              String   @id @default(cuid())
+  userId          String
+  caption         String?
+  mediaUrl        String?
+  mediaType       String?
+  backgroundStyle String?
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  views PortalStoryView[]
+  likes PortalStoryLike[]
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
+  @@map("portal_stories")
+}
+
+model PortalStoryView {
+  id        String   @id @default(cuid())
+  storyId   String
+  viewerId  String
+  viewedAt  DateTime @default(now())
+
+  story  PortalStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  viewer User        @relation(fields: [viewerId], references: [id], onDelete: Cascade)
+
+  @@unique([storyId, viewerId])
+  @@index([viewerId, viewedAt])
+  @@map("portal_story_views")
+}
+
+model PortalStoryLike {
+  id        String   @id @default(cuid())
+  storyId   String
+  userId    String
+  type      String   @default("LIKE") // "LIKE", "LOVE", "HAHA", "WOW", "SAD"
+  createdAt DateTime @default(now())
+
+  story  PortalStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([storyId, userId])
+  @@index([storyId])
+  @@map("portal_story_likes")
+}
+
+model PortalMessengerSettings {
+  id               String   @id @default(cuid())
+  maxUploadBytes   Int      @default(307200) // 300KB default
+  maxImageBytes    Int      @default(307200)
+  maxAudioBytes    Int      @default(307200)
+  maxDocumentBytes Int      @default(307200)
+  maxRecordingSec  Int      @default(18)
+  audioBitsPerSec  Int      @default(24000)
+  maxStoriesPerUser Int      @default(8)
+  storyTTLHours    Int      @default(24)
+  updatedAt        DateTime @updatedAt
+
+  @@map("portal_messenger_settings")
+}
+
+model PortalConnectionRequest {
+  id          String   @id @default(cuid())
+  requesterId String
+  targetId    String
+  status      String   @default("PENDING")
+  note        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  respondedAt DateTime?
+
+  requester User @relation("PortalConnectionRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  target    User @relation("PortalConnectionTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, targetId])
+  @@index([requesterId, status, createdAt])
+  @@index([targetId, status, createdAt])
+  @@map("portal_connection_requests")
+}
+
+// ============= NOTIFICATION TEMPLATE MODEL =============
+
+model NotificationTemplate {
+  id              String   @id @default(cuid())
+  type            String   @unique
+  titleTemplate   String
+  messageTemplate String
+  channels        Json     // ["IN_APP", "EMAIL", "SMS", "WHATSAPP"]
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@map("notification_templates")
+}
+
+// ============= USER REWARD MODEL =============
+
+model UserReward {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String   // "DISCOUNT_CODE", "CASH_BONUS", "VIP_UPGRADE", "FREE_TRANSACTION"
+  title       String
+  description String
+  value       Float?
+  code        String?
+  isUsed      Boolean  @default(false)
+  usedAt      DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_rewards")
+}
+
+// ============= PACKAGE CONFIGURATION MODEL =============
+
+model PackageConfig {
+  id               String      @id @default(cuid())
+  type             PackageType @unique
+  name             String
+  price            Int
+  credits          Int         // Credits included in package
+  maxBranches      Int         // -1 for unlimited
+  features         Json        // Array of feature names
+  isActive         Boolean     @default(true)
+  displayOrder     Int         @default(0)
+  description      String?
+  highlightFeature String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  
+  @@map("package_configs")
+}
+
+// ============= GUEST TRANSACTION MODEL =============
+
+model GuestTransaction {
+  id              String   @id @default(cuid())
+  transactionId   String   @unique
+  senderName      String
+  senderPhone     String
+  senderEmail     String?
+  receiverName    String
+  receiverPhone   String
+  trackingToken   String   @unique
+  notificationSent Boolean @default(false)
+  createdAt       DateTime @default(now())
+
+  @@map("guest_transactions")
+}
+
+model GuestChatSession {
+  id            String   @id @default(cuid())
+  accessToken   String   @unique
+  type          String   // "VISITOR_TO_ADMIN", "VISITOR_TO_SARAF"
+  sarafId       String?
+  visitorName   String
+  visitorPhone  String?
+  visitorEmail  String?
+  isActive      Boolean  @default(true)
+  lastMessageAt DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  saraf    Saraf?             @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  messages GuestChatMessage[]
+
+  @@index([type, isActive, updatedAt])
+  @@index([sarafId, isActive, updatedAt])
+  @@map("guest_chat_sessions")
+}
+
+model GuestChatMessage {
+  id           String   @id @default(cuid())
+  sessionId    String
+  senderType   String   // "VISITOR", "ADMIN", "SARAF", "SYSTEM"
+  senderUserId String?
+  senderName   String
+  message      String
+  fileUrl      String?
+  fileName     String?
+  isRead       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  session GuestChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@index([sessionId, senderType, isRead])
+  @@map("guest_chat_messages")
+}
+
+// ============= EXISTING MODELS (UNCHANGED) =============
+
+model Rate {
+  id           String   @id @default(cuid())
+  sarafId      String
+  fromCurrency String
+  toCurrency   String
+  buyRate      Float
+  sellRate     Float
+  isActive     Boolean  @default(true)
+  validUntil   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@unique([sarafId, fromCurrency, toCurrency])
+  @@index([sarafId, isActive])
+  @@index([fromCurrency, toCurrency, isActive])
+  @@map("rates")
+}
+
+model Document {
+  id           String   @id @default(cuid())
+  sarafId      String
+  type         String
+  filename     String
+  originalName String
+  url          String
+  size         Int
+  mimeType     String
+  isVerified   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@map("documents")
+}
+
+model MarketData {
+  id               String   @id @default(cuid())
+  symbol           String
+  type             String
+  name             String
+  price            Float
+  change24h        Float
+  changePercent24h Float
+  volume24h        Float?
+  marketCap        Float?
+  lastUpdate       DateTime @default(now())
+  
+  @@unique([symbol, type])
+  @@map("market_data")
+}
+
+model SystemConfig {
+  key         String   @id
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+  
+  @@map("system_config")
+}
+
+model AdminStatsSnapshot {
+  id        String   @id @default(cuid())
+  label     String?
+  payload   Json
+  createdBy String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("admin_stats_snapshots")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  resource   String
+  resourceId String?
+  details    String?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  
+  @@map("audit_logs")
+}
+
+model Blacklist {
+  id              String   @id @default(cuid())
+  type            String
+  value           String
+  normalizedValue String
+  reason          String
+  addedBy         String
+  sarafId         String?
+  scopeKey        String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  saraf Saraf? @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+
+  @@unique([type, normalizedValue, scopeKey])
+  @@index([sarafId, createdAt])
+  @@index([type, normalizedValue])
+  @@map("blacklists")
+}
+
+model ChartDrawing {
+  id          String   @id @default(cuid())
+  userId      String
+  symbol      String
+  timeframe   String
+  drawingType String
+  drawingData String
+  name        String?
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, symbol, timeframe, name])
+  @@map("chart_drawings")
+}
+
+model ChartLayout {
+  id         String   @id @default(cuid())
+  userId     String
+  name       String
+  symbol     String
+  timeframe  String
+  chartType  String   @default("candlestick")
+  indicators String
+  settings   String
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, name])
+  @@map("chart_layouts")
+}
+
+model Asset {
+  id           String   @id @default(cuid())
+  symbol       String   @unique
+  name         String
+  type         String
+  category     String?
+  exchange     String?
+  baseAsset    String?
+  quoteAsset   String?
+  isActive     Boolean  @default(true)
+  minPrice     Float?
+  maxPrice     Float?
+  priceStep    Float?
+  volumeStep   Float?
+  description  String?
+  website      String?
+  logoUrl      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  priceHistory PriceHistory[]
+  watchlists   UserWatchlist[]
+  
+  @@map("assets")
+}
+
+model PriceHistory {
+  id        String   @id @default(cuid())
+  assetId   String
+  symbol    String
+  timeframe String
+  timestamp DateTime
+  open      Float
+  high      Float
+  low       Float
+  close     Float
+  volume    Float?
+  
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  
+  @@unique([symbol, timeframe, timestamp])
+  @@map("price_history")
+}
+
+model UserWatchlist {
+  id        String   @id @default(cuid())
+  userId    String
+  assetId   String
+  name      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, assetId])
+  @@map("user_watchlists")
+}
+
+model ChartAlert {
+  id          String   @id @default(cuid())
+  userId      String
+  symbol      String
+  name        String
+  condition   String
+  targetPrice Float
+  message     String?
+  isActive    Boolean  @default(true)
+  isTriggered Boolean  @default(false)
+  triggeredAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("chart_alerts")
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  userId     String
+  title      String
+  message    String
+  type       String   @default("info")
+  action     String?
+  resource   String?
+  resourceId String?
+  data       String?
+  read       Boolean  @default(false)
+  readAt     DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, read])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+model PromotionRequest {
+  id            String   @id @default(cuid())
+  sarafId       String
+  type          String
+  duration      Int
+  amount        Float
+  paymentMethod String
+  paymentProof  String?
+  status        String   @default("PENDING")
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  expiresAt     DateTime?
+  
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@index([sarafId, status])
+  @@index([status, createdAt])
+  @@map("promotion_requests")
+}
+
+model PromotionConfig {
+  id           String   @id @default(cuid())
+  type         String   @unique // "PREMIUM" | "FEATURED"
+  name         String
+  description  String?
+  // Optional multi-language fields (fa/en/ps). If present, API can return localized text.
+  nameI18n        Json?
+  descriptionI18n Json?
+  featuresI18n    Json?    // { fa: string[], en: string[], ps: string[] }
+  features     Json     // string[]
+  // Structured effects that are actually enforced in the system (not just text).
+  // Example: { directoryWeight: 200, maxRatePairs: 50, prioritySupport: true, detailedReports: true }
+  effects      Json?
+  pricing      Json     // [{ duration: number, amount: number }]
+  isActive     Boolean  @default(true)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("promotion_configs")
+}
+
+model ContentItem {
+  id        String   @id @default(cuid())
+  title     String
+  type      String
+  content   String
+  url       String?
+  position  String   @default("DASHBOARD")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("content_items")
+}
+
+model ChatSession {
+  id        String   @id @default(cuid())
+  userId    String
+  sarafId   String?
+  type      String   @default("SUPPORT")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  saraf    Saraf?        @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  messages ChatMessage[]
+  
+  @@index([userId])
+  @@index([sarafId])
+  @@index([userId, sarafId])
+  @@map("chat_sessions")
+}
+
+// ============= USER FAVORITES MODEL =============
+
+model UserFavorite {
+  id        String   @id @default(cuid())
+  userId    String
+  sarafId   String
+  createdAt DateTime @default(now())
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, sarafId])
+  @@map("user_favorites")
+}
+
+model TransactionShare {
+  id                String      @id @default(cuid())
+  userId            String
+  transactionId     String
+  shareToken        String      @unique
+  title             String?
+  note              String?
+  allowAmounts      Boolean     @default(false)
+  allowParticipants Boolean     @default(false)
+  allowSaraf        Boolean     @default(true)
+  isActive          Boolean     @default(true)
+  views             Int         @default(0)
+  expiresAt         DateTime?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transaction Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([transactionId, isActive])
+  @@index([shareToken, isActive])
+  @@map("transaction_shares")
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  sessionId  String
+  senderId   String
+  senderName String
+  senderRole String
+  message    String
+  fileUrl    String?
+  timestamp  DateTime @default(now())
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  @@index([sessionId, timestamp])
+  @@index([sessionId, senderRole, isRead])
+  
+  @@map("chat_messages")
+}
+
+model EducationCourse {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  category        String
+  level           String
+  duration        Int
+  price           Float    @default(0)
+  isPremium       Boolean  @default(false)
+  isPublished     Boolean  @default(false)
+  thumbnailUrl    String?
+  videoUrl        String?
+  content         String
+  tags            String
+  rating          Float    @default(0)
+  enrollments     Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  lessons         EducationLesson[]
+  enrollments_rel UserCourseEnrollment[]
+  
+  @@index([isPublished, category])
+  @@index([isPremium, isPublished])
+  @@map("education_courses")
+}
+
+model EducationLesson {
+  id          String   @id @default(cuid())
+  courseId    String
+  title       String
+  description String?
+  content     String
+  videoUrl    String?
+  duration    Int
+  order       Int
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  course   EducationCourse      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress UserLessonProgress[]
+  
+  @@map("education_lessons")
+}
+
+model UserCourseEnrollment {
+  id          String   @id @default(cuid())
+  userId      String
+  courseId    String
+  progress    Float    @default(0)
+  isCompleted Boolean  @default(false)
+  completedAt DateTime?
+  enrolledAt  DateTime @default(now())
+  
+  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course EducationCourse @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, courseId])
+  @@map("user_course_enrollments")
+}
+
+model UserLessonProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  lessonId    String
+  isCompleted Boolean  @default(false)
+  completedAt DateTime?
+  watchTime   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson EducationLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, lessonId])
+  @@map("user_lesson_progress")
+}
+
+model TechNews {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  content     String?
+  url         String   @unique
+  source      String
+  category    String
+  language    String   @default("fa")
+  imageUrl    String?
+  publishedAt DateTime
+  isActive    Boolean  @default(true)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("tech_news")
+}
+
+model SarafRating {
+  id         String   @id @default(cuid())
+  userId     String
+  sarafId    String
+  rating     Int
+  comment    String?
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  saraf Saraf @relation(fields: [sarafId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, sarafId])
+  @@index([sarafId, rating])
+  @@index([isVerified, createdAt])
+  @@map("saraf_ratings")
+}

@@ -1,0 +1,20 @@
+{
+  "name": "سرای شهزاده",
+  "short_name": "سرای شهزاده",
+  "description": "پلتفورم جامع مالی برای افغانستان",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["finance", "business"],
+  "lang": "fa",
+  "dir": "rtl"
+}

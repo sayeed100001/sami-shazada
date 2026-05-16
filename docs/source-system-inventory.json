@@ -1,0 +1,1873 @@
+﻿{
+    "generatedAt":  "2026-04-07T17:05:06.7065443+04:30",
+    "source":  "current repo source code",
+    "project":  {
+                    "name":  "saray-shazada",
+                    "version":  "1.0.0",
+                    "private":  true,
+                    "node":  "20.x",
+                    "framework":  "Next.js App Router",
+                    "language":  "TypeScript",
+                    "packageManager":  "npm"
+                },
+    "counts":  {
+                   "pages":  85,
+                   "apiRoutes":  232,
+                   "layouts":  3,
+                   "components":  174,
+                   "libs":  99,
+                   "contexts":  4,
+                   "hooks":  7,
+                   "scripts":  33,
+                   "tests":  17,
+                   "prismaModels":  48,
+                   "prismaEnums":  6
+               },
+    "packageScripts":  {
+                           "predev":  "node switch-schema.js",
+                           "dev":  "node scripts/run-next.js dev",
+                           "dev:https":  "node scripts/run-next.js dev --experimental-https",
+                           "prebuild":  "node switch-schema.js \u0026\u0026 node scripts/prisma-generate.js",
+                           "build":  "node scripts/run-next.js build",
+                           "start":  "node scripts/run-next.js start",
+                           "lint":  "next lint",
+                           "clean":  "node scripts/clean-next.js",
+                           "db:generate":  "node switch-schema.js \u0026\u0026 node scripts/prisma-generate.js",
+                           "db:push":  "node switch-schema.js \u0026\u0026 node scripts/prisma-cli.js db push",
+                           "db:migrate":  "node switch-schema.js \u0026\u0026 node scripts/db-migrate.js",
+                           "db:seed":  "tsx scripts/seed.ts",
+                           "db:seed:real":  "tsx scripts/realSeed.ts",
+                           "db:studio":  "node switch-schema.js \u0026\u0026 node scripts/prisma-cli.js studio",
+                           "init-system":  "tsx scripts/initializeSystem.ts",
+                           "init-db":  "tsx scripts/initializeDatabase.ts",
+                           "init-complete":  "tsx scripts/initialize-complete-system.ts",
+                           "seed:packages":  "tsx scripts/seed-packages.ts",
+                           "seed:home-content":  "tsx scripts/seed-home-content.ts",
+                           "setup":  "npm run db:push \u0026\u0026 npm run init-complete",
+                           "test:content":  "tsx scripts/testContent.ts",
+                           "docker:build":  "docker build -t saray-shazada .",
+                           "docker:run":  "docker-compose up -d",
+                           "docker:stop":  "docker-compose down",
+                           "postinstall":  "node switch-schema.js \u0026\u0026 node scripts/prisma-generate.js",
+                           "seed:courses":  "tsx scripts/seedPersianCourses.ts",
+                           "clear-limits":  "node clear-rate-limits.js",
+                           "vercel-build":  "node switch-schema.js \u0026\u0026 node scripts/db-migrate.js \u0026\u0026 npx prisma generate \u0026\u0026 next build",
+                           "vercel:doctor":  "node scripts/vercel-doctor.js",
+                           "typecheck":  "tsc --noEmit",
+                           "test":  "vitest run",
+                           "ci:check":  "npm run lint \u0026\u0026 npm run typecheck \u0026\u0026 npm run test",
+                           "test:watch":  "vitest"
+                       },
+    "topLevelAppDirectories":  [
+                                   "admin",
+                                   "admin-emergency-login",
+                                   "ai-assistant",
+                                   "api",
+                                   "auth",
+                                   "calculator",
+                                   "charts",
+                                   "commodities",
+                                   "community",
+                                   "crypto",
+                                   "education",
+                                   "hawala",
+                                   "maintenance",
+                                   "management",
+                                   "mobile-app",
+                                   "notifications",
+                                   "portal",
+                                   "privacy",
+                                   "profile",
+                                   "rates",
+                                   "sarafs",
+                                   "search",
+                                   "settings",
+                                   "shared",
+                                   "system-status",
+                                   "terms",
+                                   "track",
+                                   "user",
+                                   "vip"
+                               ],
+    "publicPages":  [
+                        {
+                            "url":  "/admin/advertisements",
+                            "file":  "app/admin/advertisements/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/api-keys",
+                            "file":  "app/admin/api-keys/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/audit-logs",
+                            "file":  "app/admin/audit-logs/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/backups",
+                            "file":  "app/admin/backups/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/blacklist",
+                            "file":  "app/admin/blacklist/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/chat",
+                            "file":  "app/admin/chat/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/commission-settings",
+                            "file":  "app/admin/commission-settings/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/content",
+                            "file":  "app/admin/content/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/credit-requests",
+                            "file":  "app/admin/credit-requests/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/discount-codes",
+                            "file":  "app/admin/discount-codes/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/education",
+                            "file":  "app/admin/education/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/exchange",
+                            "file":  "app/admin/exchange/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/external-apis",
+                            "file":  "app/admin/external-apis/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/featured-sarafs",
+                            "file":  "app/admin/featured-sarafs/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/home-content",
+                            "file":  "app/admin/home-content/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/packages",
+                            "file":  "app/admin/packages/page.tsx"
+                        },
+                        {
+                            "url":  "/admin",
+                            "file":  "app/admin/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/promotions",
+                            "file":  "app/admin/promotions/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/reports",
+                            "file":  "app/admin/reports/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/sarafs",
+                            "file":  "app/admin/sarafs/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/social-content",
+                            "file":  "app/admin/social-content/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/statistics",
+                            "file":  "app/admin/statistics/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/subscriptions",
+                            "file":  "app/admin/subscriptions/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/system",
+                            "file":  "app/admin/system/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/theme",
+                            "file":  "app/admin/theme/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/transactions",
+                            "file":  "app/admin/transactions/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/users",
+                            "file":  "app/admin/users/page.tsx"
+                        },
+                        {
+                            "url":  "/admin/webhooks",
+                            "file":  "app/admin/webhooks/page.tsx"
+                        },
+                        {
+                            "url":  "/admin-emergency-login",
+                            "file":  "app/admin-emergency-login/page.tsx"
+                        },
+                        {
+                            "url":  "/ai-assistant",
+                            "file":  "app/ai-assistant/page.tsx"
+                        },
+                        {
+                            "url":  "/auth/error",
+                            "file":  "app/auth/error/page.tsx"
+                        },
+                        {
+                            "url":  "/auth/forgot-password",
+                            "file":  "app/auth/forgot-password/page.tsx"
+                        },
+                        {
+                            "url":  "/auth/saraf-signup",
+                            "file":  "app/auth/saraf-signup/page.tsx"
+                        },
+                        {
+                            "url":  "/auth/signin",
+                            "file":  "app/auth/signin/page.tsx"
+                        },
+                        {
+                            "url":  "/auth/signup",
+                            "file":  "app/auth/signup/page.tsx"
+                        },
+                        {
+                            "url":  "/calculator",
+                            "file":  "app/calculator/page.tsx"
+                        },
+                        {
+                            "url":  "/charts",
+                            "file":  "app/charts/page.tsx"
+                        },
+                        {
+                            "url":  "/commodities",
+                            "file":  "app/commodities/page.tsx"
+                        },
+                        {
+                            "url":  "/community/leaderboard",
+                            "file":  "app/community/leaderboard/page.tsx"
+                        },
+                        {
+                            "url":  "/community/users/[id]",
+                            "file":  "app/community/users/[id]/page.tsx"
+                        },
+                        {
+                            "url":  "/crypto",
+                            "file":  "app/crypto/page.tsx"
+                        },
+                        {
+                            "url":  "/education/[id]",
+                            "file":  "app/education/[id]/page.tsx"
+                        },
+                        {
+                            "url":  "/education",
+                            "file":  "app/education/page.tsx"
+                        },
+                        {
+                            "url":  "/hawala",
+                            "file":  "app/hawala/page.tsx"
+                        },
+                        {
+                            "url":  "/hawala/track",
+                            "file":  "app/hawala/track/page.tsx"
+                        },
+                        {
+                            "url":  "/maintenance",
+                            "file":  "app/maintenance/page.tsx"
+                        },
+                        {
+                            "url":  "/management",
+                            "file":  "app/management/page.tsx"
+                        },
+                        {
+                            "url":  "/mobile-app",
+                            "file":  "app/mobile-app/page.tsx"
+                        },
+                        {
+                            "url":  "/notifications",
+                            "file":  "app/notifications/page.tsx"
+                        },
+                        {
+                            "url":  "/",
+                            "file":  "app/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/advertisement",
+                            "file":  "app/portal/advertisement/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/blacklist",
+                            "file":  "app/portal/blacklist/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/branches",
+                            "file":  "app/portal/branches/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/credit",
+                            "file":  "app/portal/credit/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/exchange/new",
+                            "file":  "app/portal/exchange/new/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/exchange",
+                            "file":  "app/portal/exchange/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/hawala/new",
+                            "file":  "app/portal/hawala/new/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/hawala",
+                            "file":  "app/portal/hawala/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/hawala-requests",
+                            "file":  "app/portal/hawala-requests/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/internal-chat",
+                            "file":  "app/portal/internal-chat/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/messages",
+                            "file":  "app/portal/messages/page.tsx"
+                        },
+                        {
+                            "url":  "/portal",
+                            "file":  "app/portal/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/profile",
+                            "file":  "app/portal/profile/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/promotions",
+                            "file":  "app/portal/promotions/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/rates",
+                            "file":  "app/portal/rates/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/reports",
+                            "file":  "app/portal/reports/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/subscription",
+                            "file":  "app/portal/subscription/page.tsx"
+                        },
+                        {
+                            "url":  "/portal/transactions",
+                            "file":  "app/portal/transactions/page.tsx"
+                        },
+                        {
+                            "url":  "/privacy",
+                            "file":  "app/privacy/page.tsx"
+                        },
+                        {
+                            "url":  "/profile",
+                            "file":  "app/profile/page.tsx"
+                        },
+                        {
+                            "url":  "/rates",
+                            "file":  "app/rates/page.tsx"
+                        },
+                        {
+                            "url":  "/sarafs/[id]",
+                            "file":  "app/sarafs/[id]/page.tsx"
+                        },
+                        {
+                            "url":  "/sarafs",
+                            "file":  "app/sarafs/page.tsx"
+                        },
+                        {
+                            "url":  "/search",
+                            "file":  "app/search/page.tsx"
+                        },
+                        {
+                            "url":  "/settings",
+                            "file":  "app/settings/page.tsx"
+                        },
+                        {
+                            "url":  "/shared/transactions/[token]",
+                            "file":  "app/shared/transactions/[token]/page.tsx"
+                        },
+                        {
+                            "url":  "/system-status",
+                            "file":  "app/system-status/page.tsx"
+                        },
+                        {
+                            "url":  "/terms",
+                            "file":  "app/terms/page.tsx"
+                        },
+                        {
+                            "url":  "/track",
+                            "file":  "app/track/page.tsx"
+                        },
+                        {
+                            "url":  "/user/exchange",
+                            "file":  "app/user/exchange/page.tsx"
+                        },
+                        {
+                            "url":  "/user/favorites",
+                            "file":  "app/user/favorites/page.tsx"
+                        },
+                        {
+                            "url":  "/user",
+                            "file":  "app/user/page.tsx"
+                        },
+                        {
+                            "url":  "/user/social",
+                            "file":  "app/user/social/page.tsx"
+                        },
+                        {
+                            "url":  "/user/transactions",
+                            "file":  "app/user/transactions/page.tsx"
+                        },
+                        {
+                            "url":  "/vip",
+                            "file":  "app/vip/page.tsx"
+                        }
+                    ],
+    "apiRoutes":  [
+                      {
+                          "url":  "/api/admin/activity",
+                          "file":  "app/api/admin/activity/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/advertisements/approve",
+                          "file":  "app/api/admin/advertisements/approve/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/advertisements/reject",
+                          "file":  "app/api/admin/advertisements/reject/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/advertisements",
+                          "file":  "app/api/admin/advertisements/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/analytics",
+                          "file":  "app/api/admin/analytics/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/api-keys/[id]",
+                          "file":  "app/api/admin/api-keys/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/api-keys",
+                          "file":  "app/api/admin/api-keys/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/audit-logs/export",
+                          "file":  "app/api/admin/audit-logs/export/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/audit-logs",
+                          "file":  "app/api/admin/audit-logs/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/backups/[id]",
+                          "file":  "app/api/admin/backups/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/backups",
+                          "file":  "app/api/admin/backups/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/blacklist/[id]",
+                          "file":  "app/api/admin/blacklist/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/blacklist",
+                          "file":  "app/api/admin/blacklist/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/bulk",
+                          "file":  "app/api/admin/bulk/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/broadcast",
+                          "file":  "app/api/admin/chat/broadcast/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/messages/[id]",
+                          "file":  "app/api/admin/chat/messages/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/recent-messages",
+                          "file":  "app/api/admin/chat/recent-messages/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/send",
+                          "file":  "app/api/admin/chat/send/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/sessions/[id]/mark-read",
+                          "file":  "app/api/admin/chat/sessions/[id]/mark-read/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/sessions/[id]",
+                          "file":  "app/api/admin/chat/sessions/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/sessions",
+                          "file":  "app/api/admin/chat/sessions/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/stats",
+                          "file":  "app/api/admin/chat/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/chat/unread-count",
+                          "file":  "app/api/admin/chat/unread-count/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/clear-content-cache",
+                          "file":  "app/api/admin/clear-content-cache/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/clear-seed-data",
+                          "file":  "app/api/admin/clear-seed-data/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/commission-settings/[id]",
+                          "file":  "app/api/admin/commission-settings/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/commission-settings",
+                          "file":  "app/api/admin/commission-settings/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/content/[id]",
+                          "file":  "app/api/admin/content/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/content",
+                          "file":  "app/api/admin/content/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/credit/approve/[id]",
+                          "file":  "app/api/admin/credit/approve/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/credit/reject/[id]",
+                          "file":  "app/api/admin/credit/reject/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/credit",
+                          "file":  "app/api/admin/credit/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/credit-requests",
+                          "file":  "app/api/admin/credit-requests/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/discount-codes/[id]",
+                          "file":  "app/api/admin/discount-codes/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/discount-codes",
+                          "file":  "app/api/admin/discount-codes/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/analytics",
+                          "file":  "app/api/admin/education/analytics/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/bulk",
+                          "file":  "app/api/admin/education/bulk/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/courses/[id]",
+                          "file":  "app/api/admin/education/courses/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/courses",
+                          "file":  "app/api/admin/education/courses/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/enrollments",
+                          "file":  "app/api/admin/education/enrollments/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/lessons",
+                          "file":  "app/api/admin/education/lessons/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/tech-news/refresh",
+                          "file":  "app/api/admin/education/tech-news/refresh/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/education/tech-news",
+                          "file":  "app/api/admin/education/tech-news/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/exchange",
+                          "file":  "app/api/admin/exchange/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/exchange/settings",
+                          "file":  "app/api/admin/exchange/settings/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/external-apis",
+                          "file":  "app/api/admin/external-apis/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/external-apis/test",
+                          "file":  "app/api/admin/external-apis/test/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/free-trial",
+                          "file":  "app/api/admin/free-trial/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/home-content/[id]",
+                          "file":  "app/api/admin/home-content/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/home-content",
+                          "file":  "app/api/admin/home-content/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/home-content/seed",
+                          "file":  "app/api/admin/home-content/seed/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/market-data",
+                          "file":  "app/api/admin/market-data/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/packages",
+                          "file":  "app/api/admin/packages/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/promotions/[id]",
+                          "file":  "app/api/admin/promotions/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/promotions",
+                          "file":  "app/api/admin/promotions/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/reports/export",
+                          "file":  "app/api/admin/reports/export/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/reports",
+                          "file":  "app/api/admin/reports/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/rewards/activity",
+                          "file":  "app/api/admin/rewards/activity/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/rewards/grant",
+                          "file":  "app/api/admin/rewards/grant/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/sarafs/[id]",
+                          "file":  "app/api/admin/sarafs/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/sarafs/bulk",
+                          "file":  "app/api/admin/sarafs/bulk/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/sarafs",
+                          "file":  "app/api/admin/sarafs/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/stats/reset",
+                          "file":  "app/api/admin/stats/reset/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/stats",
+                          "file":  "app/api/admin/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/stats/snapshots/[id]",
+                          "file":  "app/api/admin/stats/snapshots/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/stats/snapshots",
+                          "file":  "app/api/admin/stats/snapshots/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/subscriptions/approve/[id]",
+                          "file":  "app/api/admin/subscriptions/approve/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/subscriptions/reject/[id]",
+                          "file":  "app/api/admin/subscriptions/reject/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/subscriptions",
+                          "file":  "app/api/admin/subscriptions/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/system/metrics",
+                          "file":  "app/api/admin/system/metrics/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/system-config",
+                          "file":  "app/api/admin/system-config/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/theme",
+                          "file":  "app/api/admin/theme/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/transactions",
+                          "file":  "app/api/admin/transactions/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/uploads/image",
+                          "file":  "app/api/admin/uploads/image/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/users/[id]/rewards",
+                          "file":  "app/api/admin/users/[id]/rewards/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/users/[id]",
+                          "file":  "app/api/admin/users/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/users/bulk",
+                          "file":  "app/api/admin/users/bulk/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/users",
+                          "file":  "app/api/admin/users/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/users/top",
+                          "file":  "app/api/admin/users/top/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/webhooks/[id]",
+                          "file":  "app/api/admin/webhooks/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/admin/webhooks",
+                          "file":  "app/api/admin/webhooks/route.ts"
+                      },
+                      {
+                          "url":  "/api/assets",
+                          "file":  "app/api/assets/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/[...nextauth]",
+                          "file":  "app/api/auth/[...nextauth]/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/otp/send",
+                          "file":  "app/api/auth/otp/send/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/otp/verify",
+                          "file":  "app/api/auth/otp/verify/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/password/config",
+                          "file":  "app/api/auth/password/config/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/password/reset",
+                          "file":  "app/api/auth/password/reset/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/recaptcha/config",
+                          "file":  "app/api/auth/recaptcha/config/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/saraf-signup",
+                          "file":  "app/api/auth/saraf-signup/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/signup",
+                          "file":  "app/api/auth/signup/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/verify-email",
+                          "file":  "app/api/auth/verify-email/route.ts"
+                      },
+                      {
+                          "url":  "/api/auth/verify-phone",
+                          "file":  "app/api/auth/verify-phone/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/alerts",
+                          "file":  "app/api/charts/alerts/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/assets",
+                          "file":  "app/api/charts/assets/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/data",
+                          "file":  "app/api/charts/data/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/drawings",
+                          "file":  "app/api/charts/drawings/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/layouts",
+                          "file":  "app/api/charts/layouts/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/real-data",
+                          "file":  "app/api/charts/real-data/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/user-preferences",
+                          "file":  "app/api/charts/user-preferences/route.ts"
+                      },
+                      {
+                          "url":  "/api/charts/watchlist",
+                          "file":  "app/api/charts/watchlist/route.ts"
+                      },
+                      {
+                          "url":  "/api/chat/initialize",
+                          "file":  "app/api/chat/initialize/route.ts"
+                      },
+                      {
+                          "url":  "/api/chat/messages/[id]",
+                          "file":  "app/api/chat/messages/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/chat/messages",
+                          "file":  "app/api/chat/messages/route.ts"
+                      },
+                      {
+                          "url":  "/api/chat/send",
+                          "file":  "app/api/chat/send/route.ts"
+                      },
+                      {
+                          "url":  "/api/clear-cache",
+                          "file":  "app/api/clear-cache/route.ts"
+                      },
+                      {
+                          "url":  "/api/commission/calculate",
+                          "file":  "app/api/commission/calculate/route.ts"
+                      },
+                      {
+                          "url":  "/api/community/leaderboard",
+                          "file":  "app/api/community/leaderboard/route.ts"
+                      },
+                      {
+                          "url":  "/api/community/users/[id]",
+                          "file":  "app/api/community/users/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/content",
+                          "file":  "app/api/content/route.ts"
+                      },
+                      {
+                          "url":  "/api/create-sarafs",
+                          "file":  "app/api/create-sarafs/route.ts"
+                      },
+                      {
+                          "url":  "/api/cron/check-expiry",
+                          "file":  "app/api/cron/check-expiry/route.ts"
+                      },
+                      {
+                          "url":  "/api/crypto/history",
+                          "file":  "app/api/crypto/history/route.ts"
+                      },
+                      {
+                          "url":  "/api/crypto",
+                          "file":  "app/api/crypto/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/courses/[id]/enroll",
+                          "file":  "app/api/education/courses/[id]/enroll/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/courses/[id]",
+                          "file":  "app/api/education/courses/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/courses",
+                          "file":  "app/api/education/courses/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/enroll",
+                          "file":  "app/api/education/enroll/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/lessons/[id]",
+                          "file":  "app/api/education/lessons/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/progress",
+                          "file":  "app/api/education/progress/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/tech-news/history",
+                          "file":  "app/api/education/tech-news/history/route.ts"
+                      },
+                      {
+                          "url":  "/api/education/tech-news",
+                          "file":  "app/api/education/tech-news/route.ts"
+                      },
+                      {
+                          "url":  "/api/exchange/request",
+                          "file":  "app/api/exchange/request/route.ts"
+                      },
+                      {
+                          "url":  "/api/fees/preview",
+                          "file":  "app/api/fees/preview/route.ts"
+                      },
+                      {
+                          "url":  "/api/guest-chat/initialize",
+                          "file":  "app/api/guest-chat/initialize/route.ts"
+                      },
+                      {
+                          "url":  "/api/guest-chat/messages/[id]",
+                          "file":  "app/api/guest-chat/messages/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/guest-chat/send",
+                          "file":  "app/api/guest-chat/send/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/cancel",
+                          "file":  "app/api/hawala/cancel/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/complete",
+                          "file":  "app/api/hawala/complete/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/request",
+                          "file":  "app/api/hawala/request/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala",
+                          "file":  "app/api/hawala/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/stats",
+                          "file":  "app/api/hawala/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/status",
+                          "file":  "app/api/hawala/status/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/track/[code]",
+                          "file":  "app/api/hawala/track/[code]/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/track",
+                          "file":  "app/api/hawala/track/route.ts"
+                      },
+                      {
+                          "url":  "/api/hawala/visitor",
+                          "file":  "app/api/hawala/visitor/route.ts"
+                      },
+                      {
+                          "url":  "/api/health",
+                          "file":  "app/api/health/route.ts"
+                      },
+                      {
+                          "url":  "/api/legal/terms/accept",
+                          "file":  "app/api/legal/terms/accept/route.ts"
+                      },
+                      {
+                          "url":  "/api/legal/terms",
+                          "file":  "app/api/legal/terms/route.ts"
+                      },
+                      {
+                          "url":  "/api/link-preview",
+                          "file":  "app/api/link-preview/route.ts"
+                      },
+                      {
+                          "url":  "/api/market/commodities",
+                          "file":  "app/api/market/commodities/route.ts"
+                      },
+                      {
+                          "url":  "/api/market/overview",
+                          "file":  "app/api/market/overview/route.ts"
+                      },
+                      {
+                          "url":  "/api/monitoring",
+                          "file":  "app/api/monitoring/route.ts"
+                      },
+                      {
+                          "url":  "/api/notifications/mark-read",
+                          "file":  "app/api/notifications/mark-read/route.ts"
+                      },
+                      {
+                          "url":  "/api/notifications",
+                          "file":  "app/api/notifications/route.ts"
+                      },
+                      {
+                          "url":  "/api/openrouter",
+                          "file":  "app/api/openrouter/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/advertisement/request",
+                          "file":  "app/api/portal/advertisement/request/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/advertisement/upload-image",
+                          "file":  "app/api/portal/advertisement/upload-image/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/blacklist/[id]",
+                          "file":  "app/api/portal/blacklist/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/blacklist",
+                          "file":  "app/api/portal/blacklist/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/branches/[id]",
+                          "file":  "app/api/portal/branches/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/branches/[id]/transactions",
+                          "file":  "app/api/portal/branches/[id]/transactions/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/branches",
+                          "file":  "app/api/portal/branches/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/credit/purchase",
+                          "file":  "app/api/portal/credit/purchase/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/debug-status",
+                          "file":  "app/api/portal/debug-status/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/exchange/config",
+                          "file":  "app/api/portal/exchange/config/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/exchange/new",
+                          "file":  "app/api/portal/exchange/new/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/exchange",
+                          "file":  "app/api/portal/exchange/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/exchange/stats",
+                          "file":  "app/api/portal/exchange/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/fees/preview",
+                          "file":  "app/api/portal/fees/preview/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/fee-settings",
+                          "file":  "app/api/portal/fee-settings/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/[id]/confirm-payment",
+                          "file":  "app/api/portal/hawala/[id]/confirm-payment/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/[id]",
+                          "file":  "app/api/portal/hawala/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/approve",
+                          "file":  "app/api/portal/hawala/approve/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/destination-sarafs/[sarafId]/branches",
+                          "file":  "app/api/portal/hawala/destination-sarafs/[sarafId]/branches/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/destination-sarafs/search",
+                          "file":  "app/api/portal/hawala/destination-sarafs/search/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/new",
+                          "file":  "app/api/portal/hawala/new/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/reject",
+                          "file":  "app/api/portal/hawala/reject/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala/requests",
+                          "file":  "app/api/portal/hawala/requests/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/hawala",
+                          "file":  "app/api/portal/hawala/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/internal-chat/messages/[id]",
+                          "file":  "app/api/portal/internal-chat/messages/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/internal-chat",
+                          "file":  "app/api/portal/internal-chat/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/internal-chat/send",
+                          "file":  "app/api/portal/internal-chat/send/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/profile/password",
+                          "file":  "app/api/portal/profile/password/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/profile",
+                          "file":  "app/api/portal/profile/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/promotions",
+                          "file":  "app/api/portal/promotions/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/rates/[id]",
+                          "file":  "app/api/portal/rates/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/rates/history",
+                          "file":  "app/api/portal/rates/history/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/rates",
+                          "file":  "app/api/portal/rates/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/reports",
+                          "file":  "app/api/portal/reports/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/stats",
+                          "file":  "app/api/portal/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/subscription/request",
+                          "file":  "app/api/portal/subscription/request/route.ts"
+                      },
+                      {
+                          "url":  "/api/portal/transactions",
+                          "file":  "app/api/portal/transactions/route.ts"
+                      },
+                      {
+                          "url":  "/api/public/home-content",
+                          "file":  "app/api/public/home-content/route.ts"
+                      },
+                      {
+                          "url":  "/api/public/market",
+                          "file":  "app/api/public/market/route.ts"
+                      },
+                      {
+                          "url":  "/api/public/sarafs",
+                          "file":  "app/api/public/sarafs/route.ts"
+                      },
+                      {
+                          "url":  "/api/public/track",
+                          "file":  "app/api/public/track/route.ts"
+                      },
+                      {
+                          "url":  "/api/public/transaction-shares/[token]",
+                          "file":  "app/api/public/transaction-shares/[token]/route.ts"
+                      },
+                      {
+                          "url":  "/api/rates/convert",
+                          "file":  "app/api/rates/convert/route.ts"
+                      },
+                      {
+                          "url":  "/api/rates/history",
+                          "file":  "app/api/rates/history/route.ts"
+                      },
+                      {
+                          "url":  "/api/rates",
+                          "file":  "app/api/rates/route.ts"
+                      },
+                      {
+                          "url":  "/api/rewards",
+                          "file":  "app/api/rewards/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/direct-session",
+                          "file":  "app/api/saraf-chat/direct-session/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/initialize",
+                          "file":  "app/api/saraf-chat/initialize/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/messages/[id]",
+                          "file":  "app/api/saraf-chat/messages/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/messages",
+                          "file":  "app/api/saraf-chat/messages/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/notifications",
+                          "file":  "app/api/saraf-chat/notifications/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/send",
+                          "file":  "app/api/saraf-chat/send/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/sessions",
+                          "file":  "app/api/saraf-chat/sessions/route.ts"
+                      },
+                      {
+                          "url":  "/api/saraf-chat/stats",
+                          "file":  "app/api/saraf-chat/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/sarafs/[id]",
+                          "file":  "app/api/sarafs/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/sarafs/[id]/vote",
+                          "file":  "app/api/sarafs/[id]/vote/route.ts"
+                      },
+                      {
+                          "url":  "/api/sarafs/directory",
+                          "file":  "app/api/sarafs/directory/route.ts"
+                      },
+                      {
+                          "url":  "/api/sarafs/featured",
+                          "file":  "app/api/sarafs/featured/route.ts"
+                      },
+                      {
+                          "url":  "/api/sarafs/rating",
+                          "file":  "app/api/sarafs/rating/route.ts"
+                      },
+                      {
+                          "url":  "/api/sarafs",
+                          "file":  "app/api/sarafs/route.ts"
+                      },
+                      {
+                          "url":  "/api/security",
+                          "file":  "app/api/security/route.ts"
+                      },
+                      {
+                          "url":  "/api/seed",
+                          "file":  "app/api/seed/route.ts"
+                      },
+                      {
+                          "url":  "/api/seed-production",
+                          "file":  "app/api/seed-production/route.ts"
+                      },
+                      {
+                          "url":  "/api/settings",
+                          "file":  "app/api/settings/route.ts"
+                      },
+                      {
+                          "url":  "/api/settings/sessions/[id]",
+                          "file":  "app/api/settings/sessions/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/settings/sessions",
+                          "file":  "app/api/settings/sessions/route.ts"
+                      },
+                      {
+                          "url":  "/api/system/config/[key]",
+                          "file":  "app/api/system/config/[key]/route.ts"
+                      },
+                      {
+                          "url":  "/api/system/config/public",
+                          "file":  "app/api/system/config/public/route.ts"
+                      },
+                      {
+                          "url":  "/api/system/health",
+                          "file":  "app/api/system/health/route.ts"
+                      },
+                      {
+                          "url":  "/api/system/health-check",
+                          "file":  "app/api/system/health-check/route.ts"
+                      },
+                      {
+                          "url":  "/api/system/status",
+                          "file":  "app/api/system/status/route.ts"
+                      },
+                      {
+                          "url":  "/api/test-content",
+                          "file":  "app/api/test-content/route.ts"
+                      },
+                      {
+                          "url":  "/api/test-flow",
+                          "file":  "app/api/test-flow/route.ts"
+                      },
+                      {
+                          "url":  "/api/upload",
+                          "file":  "app/api/upload/route.ts"
+                      },
+                      {
+                          "url":  "/api/uploads/[filename]",
+                          "file":  "app/api/uploads/[filename]/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/favorites",
+                          "file":  "app/api/user/favorites/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/notifications/[id]/read",
+                          "file":  "app/api/user/notifications/[id]/read/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/notifications/read-all",
+                          "file":  "app/api/user/notifications/read-all/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/notifications",
+                          "file":  "app/api/user/notifications/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/profile/avatar",
+                          "file":  "app/api/user/profile/avatar/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/profile",
+                          "file":  "app/api/user/profile/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/social",
+                          "file":  "app/api/user/social/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/stats",
+                          "file":  "app/api/user/stats/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/transactions",
+                          "file":  "app/api/user/transactions/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/transaction-shares/[id]",
+                          "file":  "app/api/user/transaction-shares/[id]/route.ts"
+                      },
+                      {
+                          "url":  "/api/user/transaction-shares",
+                          "file":  "app/api/user/transaction-shares/route.ts"
+                      },
+                      {
+                          "url":  "/api/vip",
+                          "file":  "app/api/vip/route.ts"
+                      }
+                  ],
+    "layouts":  [
+                    "app/admin/layout.tsx",
+                    "app/layout.tsx",
+                    "app/portal/layout.tsx"
+                ],
+    "prisma":  {
+                   "enums":  [
+                                 "UserRole",
+                                 "VIPLevel",
+                                 "PackageType",
+                                 "SarafStatus",
+                                 "TransactionStatus",
+                                 "TransactionType"
+                             ],
+                   "models":  [
+                                  "User",
+                                  "TermsAcceptance",
+                                  "Saraf",
+                                  "SarafBranch",
+                                  "BranchStaff",
+                                  "Transaction",
+                                  "CommissionSetting",
+                                  "CreditTransaction",
+                                  "Subscription",
+                                  "Advertisement",
+                                  "DiscountCode",
+                                  "DiscountCodeUsage",
+                                  "OTP",
+                                  "InternalChat",
+                                  "InternalChatMessage",
+                                  "InternalChatParticipant",
+                                  "NotificationTemplate",
+                                  "UserReward",
+                                  "PackageConfig",
+                                  "GuestTransaction",
+                                  "GuestChatSession",
+                                  "GuestChatMessage",
+                                  "Rate",
+                                  "Document",
+                                  "MarketData",
+                                  "SystemConfig",
+                                  "AdminStatsSnapshot",
+                                  "AuditLog",
+                                  "Blacklist",
+                                  "ChartDrawing",
+                                  "ChartLayout",
+                                  "Asset",
+                                  "PriceHistory",
+                                  "UserWatchlist",
+                                  "ChartAlert",
+                                  "Notification",
+                                  "PromotionRequest",
+                                  "ContentItem",
+                                  "ChatSession",
+                                  "UserFavorite",
+                                  "TransactionShare",
+                                  "ChatMessage",
+                                  "EducationCourse",
+                                  "EducationLesson",
+                                  "UserCourseEnrollment",
+                                  "UserLessonProgress",
+                                  "TechNews",
+                                  "SarafRating"
+                              ],
+                   "schemaFiles":  [
+                                       "prisma/schema.prisma",
+                                       "prisma/schema.dev.prisma",
+                                       "prisma/schema.prod.prisma"
+                                   ]
+               },
+    "components":  {
+                       "chat":  [
+                                    "components/chat/AdminChatWidget.tsx",
+                                    "components/chat/EnhancedSarafChatWidget.tsx",
+                                    "components/chat/GuestSarafChatWidget.tsx",
+                                    "components/chat/PublicSupportChatWidget.tsx",
+                                    "components/chat/QuickSarafChat.tsx",
+                                    "components/chat/RealSarafChat.tsx",
+                                    "components/chat/RealTimeSarafChat.tsx",
+                                    "components/chat/SarafChatNotifications.tsx",
+                                    "components/chat/SarafChatWidget.tsx",
+                                    "components/chat/SarafDashboard.tsx",
+                                    "components/chat/SarafMessagingCenter.tsx",
+                                    "components/chat/SarafMessagingDashboard.tsx",
+                                    "components/chat/UserChatWidget.tsx",
+                                    "components/chat/UserSarafChatButton.tsx"
+                                ],
+                       "SystemLogo.tsx":  [
+                                              "components/SystemLogo.tsx"
+                                          ],
+                       "saraf":  [
+                                     "components/saraf/SarafVoting.tsx"
+                                 ],
+                       "portal":  [
+                                      "components/portal/EnhancedDashboard.tsx",
+                                      "components/portal/portal-page-header.tsx"
+                                  ],
+                       "layout":  [
+                                      "components/layout/dashboard-layout.tsx",
+                                      "components/layout/header.tsx",
+                                      "components/layout/LanguageSwitcher.tsx",
+                                      "components/layout/mobile-responsive-layout.tsx",
+                                      "components/layout/NotificationBell.tsx",
+                                      "components/layout/sidebar.tsx",
+                                      "components/layout/simple-layout.tsx",
+                                      "components/layout/streamlined-sidebar.tsx",
+                                      "components/layout/user-nav.tsx"
+                                  ],
+                       "education":  [
+                                         "components/education/EducationDashboard.tsx"
+                                     ],
+                       "error-boundary.tsx":  [
+                                                  "components/error-boundary.tsx"
+                                              ],
+                       "ErrorBoundaryWrapper.tsx":  [
+                                                        "components/ErrorBoundaryWrapper.tsx"
+                                                    ],
+                       "ContactInfo.tsx":  [
+                                               "components/ContactInfo.tsx"
+                                           ],
+                       "dashboard":  [
+                                         "components/dashboard/ContentDisplay.tsx",
+                                         "components/dashboard/crypto-section.tsx",
+                                         "components/dashboard/cta-section.tsx",
+                                         "components/dashboard/exchange-rates.tsx",
+                                         "components/dashboard/featured-sarafs.tsx",
+                                         "components/dashboard/incentive-section.tsx",
+                                         "components/dashboard/market-overview.tsx",
+                                         "components/dashboard/quick-actions.tsx",
+                                         "components/dashboard/real-market-data.tsx",
+                                         "components/dashboard/saraf-directory.tsx"
+                                     ],
+                       "ui":  [
+                                  "components/ui/accordion.tsx",
+                                  "components/ui/alert.tsx",
+                                  "components/ui/alert-dialog.tsx",
+                                  "components/ui/aspect-ratio.tsx",
+                                  "components/ui/avatar.tsx",
+                                  "components/ui/badge.tsx",
+                                  "components/ui/breadcrumb.tsx",
+                                  "components/ui/button.tsx",
+                                  "components/ui/calendar.tsx",
+                                  "components/ui/card.tsx",
+                                  "components/ui/carousel.tsx",
+                                  "components/ui/chart.tsx",
+                                  "components/ui/checkbox.tsx",
+                                  "components/ui/city-search.tsx",
+                                  "components/ui/city-search-fixed.tsx",
+                                  "components/ui/collapsible.tsx",
+                                  "components/ui/command.tsx",
+                                  "components/ui/command-fallback.tsx",
+                                  "components/ui/context-menu.tsx",
+                                  "components/ui/dialog.tsx",
+                                  "components/ui/drawer.tsx",
+                                  "components/ui/dropdown-menu.tsx",
+                                  "components/ui/form.tsx",
+                                  "components/ui/hover-card.tsx",
+                                  "components/ui/input.tsx",
+                                  "components/ui/input-otp.tsx",
+                                  "components/ui/label.tsx",
+                                  "components/ui/loading-state.tsx",
+                                  "components/ui/menubar.tsx",
+                                  "components/ui/navigation-menu.tsx",
+                                  "components/ui/pagination.tsx",
+                                  "components/ui/popover.tsx",
+                                  "components/ui/progress.tsx",
+                                  "components/ui/radio-group.tsx",
+                                  "components/ui/resizable.tsx",
+                                  "components/ui/responsive-table.tsx",
+                                  "components/ui/scroll-area.tsx",
+                                  "components/ui/select.tsx",
+                                  "components/ui/separator.tsx",
+                                  "components/ui/sheet.tsx",
+                                  "components/ui/skeleton.tsx",
+                                  "components/ui/slider.tsx",
+                                  "components/ui/sonner.tsx",
+                                  "components/ui/switch.tsx",
+                                  "components/ui/table.tsx",
+                                  "components/ui/tabs.tsx",
+                                  "components/ui/textarea.tsx",
+                                  "components/ui/theme-toggle.tsx",
+                                  "components/ui/toast.tsx",
+                                  "components/ui/toaster.tsx",
+                                  "components/ui/toggle.tsx",
+                                  "components/ui/toggle-group.tsx",
+                                  "components/ui/tooltip.tsx",
+                                  "components/ui/use-toast.ts"
+                              ],
+                       "charts":  [
+                                      "components/charts/ActualMarketData.tsx",
+                                      "components/charts/AdvancedTradingViewWidget.tsx",
+                                      "components/charts/AfghanAssetSearch.tsx",
+                                      "components/charts/AlertsPanel.tsx",
+                                      "components/charts/AssetInfo.tsx",
+                                      "components/charts/AssetSearchPanel.tsx",
+                                      "components/charts/AssetSelector.tsx",
+                                      "components/charts/ChartEngine.tsx",
+                                      "components/charts/ChartManagement.tsx",
+                                      "components/charts/ChartSettings.tsx",
+                                      "components/charts/ChartSidebar.tsx",
+                                      "components/charts/ChartToolbar.tsx",
+                                      "components/charts/CompleteTradingView.tsx",
+                                      "components/charts/DataProcessor.tsx",
+                                      "components/charts/DrawingPersistence.tsx",
+                                      "components/charts/EnhancedAssetSearch.tsx",
+                                      "components/charts/FinalTradingView.tsx",
+                                      "components/charts/FullTradingViewChart.tsx",
+                                      "components/charts/IndicatorTest.tsx",
+                                      "components/charts/LayoutManager.tsx",
+                                      "components/charts/LivePriceUpdater.tsx",
+                                      "components/charts/MarketDepth.tsx",
+                                      "components/charts/MarketWatchlist.tsx",
+                                      "components/charts/MinimalTradingView.tsx",
+                                      "components/charts/OrderBookTrades.tsx",
+                                      "components/charts/ProfessionalChart.tsx",
+                                      "components/charts/ProfessionalTradingChart.tsx",
+                                      "components/charts/ProfessionalTradingView.tsx",
+                                      "components/charts/QuickAssetSelector.tsx",
+                                      "components/charts/RealDataFetcher.tsx",
+                                      "components/charts/RealMarketData.tsx",
+                                      "components/charts/RealMarketDataFetcher.tsx",
+                                      "components/charts/RealTimeChart.tsx",
+                                      "components/charts/RealTimeChartEngine.tsx",
+                                      "components/charts/RealTimeDataProvider.tsx",
+                                      "components/charts/RealTradingView.tsx",
+                                      "components/charts/SafeTradingView.tsx",
+                                      "components/charts/SimpleAssetSearch.tsx",
+                                      "components/charts/SimpleTradingView.tsx",
+                                      "components/charts/TradingAlerts.tsx",
+                                      "components/charts/TradingViewChart.tsx",
+                                      "components/charts/TradingViewErrorBoundary.tsx",
+                                      "components/charts/TradingViewWidget.tsx",
+                                      "components/charts/WatchlistPanel.tsx",
+                                      "components/charts/WorkingTradingView.tsx"
+                                  ],
+                       "calculator":  [
+                                          "components/calculator/EnhancedCalculator.tsx",
+                                          "components/calculator/EnterpriseCalculator.tsx"
+                                      ],
+                       "ErrorSuppressor.tsx":  [
+                                                   "components/ErrorSuppressor.tsx"
+                                               ],
+                       "providers.tsx":  [
+                                             "components/providers.tsx"
+                                         ],
+                       "hawala":  [
+                                      "components/hawala/NewHawalaForm.tsx",
+                                      "components/hawala/SarafCombobox.tsx",
+                                      "components/hawala/TrackingSystem.tsx",
+                                      "components/hawala/VisitorHawalaForm.tsx"
+                                  ],
+                       "shared":  [
+                                      "components/shared/managed-image-upload-field.tsx"
+                                  ],
+                       "social":  [
+                                      "components/social/AchievementStrip.tsx",
+                                      "components/social/CleanSocialShare.tsx",
+                                      "components/social/FacebookContent.tsx",
+                                      "components/social/LinkPreviewCard.tsx",
+                                      "components/social/LiveWebsitePreview.tsx",
+                                      "components/social/SarafFollowButton.tsx",
+                                      "components/social/SocialContentManager.tsx",
+                                      "components/social/SocialWidgetManager.tsx",
+                                      "components/social/TransactionShareDialog.tsx"
+                                  ],
+                       "management":  [
+                                          "components/management/UserManagement.tsx"
+                                      ],
+                       "auth":  [
+                                    "components/auth/terms-consent-panel.tsx"
+                                ],
+                       "exchange":  [
+                                        "components/exchange/UserExchangeRequestForm.tsx"
+                                    ],
+                       "ErrorBoundary.tsx":  [
+                                                 "components/ErrorBoundary.tsx"
+                                             ],
+                       "admin":  [
+                                     "components/admin/AdminBroadcastMessage.tsx",
+                                     "components/admin/AdminFloatingChatButton.tsx",
+                                     "components/admin/AdminMessagingDashboard.tsx",
+                                     "components/admin/EducationAnalytics.tsx",
+                                     "components/admin/LinkPreviewManager.tsx",
+                                     "components/admin/overview.tsx",
+                                     "components/admin/quick-actions.tsx",
+                                     "components/admin/RecentActivityCard.tsx",
+                                     "components/admin/recent-transactions.tsx",
+                                     "components/admin/system-health.tsx",
+                                     "components/admin/SystemHealthDashboard.tsx",
+                                     "components/admin/SystemHealthMonitor.tsx"
+                                 ]
+                   },
+    "libs":  [
+                 "lib/account-lockout.ts",
+                 "lib/admin-stats-cache.ts",
+                 "lib/advertisement-storage.ts",
+                 "lib/advertising.ts",
+                 "lib/all-translations.ts",
+                 "lib/api-error-handler.ts",
+                 "lib/api-response.ts",
+                 "lib/app-url.ts",
+                 "lib/auth.ts",
+                 "lib/auth-rate-limit.ts",
+                 "lib/auth-registration.ts",
+                 "lib/auth-utils.ts",
+                 "lib/avatar-storage.ts",
+                 "lib/backup-service.ts",
+                 "lib/blacklist-service.ts",
+                 "lib/branch-management.ts",
+                 "lib/business-validation.ts",
+                 "lib/cache.ts",
+                 "lib/client-recaptcha.ts",
+                 "lib/commission.ts",
+                 "lib/config-encryption.ts",
+                 "lib/config-enforcer.ts",
+                 "lib/config-service.ts",
+                 "lib/credit-pricing.ts",
+                 "lib/credit-usage.ts",
+                 "lib/database-health.ts",
+                 "lib/dev-endpoints.ts",
+                 "lib/email-service.ts",
+                 "lib/enterprise-cache.ts",
+                 "lib/enterprise-translations.ts",
+                 "lib/env-validation.js",
+                 "lib/env-validation.ts",
+                 "lib/errorHandler.ts",
+                 "lib/errorHandling.ts",
+                 "lib/export-service.ts",
+                 "lib/external-api-service.ts",
+                 "lib/fetch-with-auth.ts",
+                 "lib/file-upload-security.ts",
+                 "lib/fx-rates.ts",
+                 "lib/guest-chat.ts",
+                 "lib/hawala-service.ts",
+                 "lib/home-page-content.ts",
+                 "lib/i18n.ts",
+                 "lib/i18n-enhanced.ts",
+                 "lib/image-upload-limits.ts",
+                 "lib/image-url-policy.ts",
+                 "lib/job-queue.ts",
+                 "lib/locale.ts",
+                 "lib/logger.ts",
+                 "lib/managed-image-storage.ts",
+                 "lib/marketDataAPI.ts",
+                 "lib/market-history.ts",
+                 "lib/monitoring.ts",
+                 "lib/otp-security.ts",
+                 "lib/pagination.ts",
+                 "lib/phone.ts",
+                 "lib/polling.ts",
+                 "lib/portal-access.ts",
+                 "lib/prisma.ts",
+                 "lib/prisma-filters.ts",
+                 "lib/rate-limit-middleware.ts",
+                 "lib/rbac.ts",
+                 "lib/realHistoricalData.ts",
+                 "lib/realMarketData.ts",
+                 "lib/recaptcha.ts",
+                 "lib/redis.ts",
+                 "lib/revenue-normalization.ts",
+                 "lib/rss-feed-service.ts",
+                 "lib/rssParser.ts",
+                 "lib/rssParser-fixed.ts",
+                 "lib/rssParser-tech-only.ts",
+                 "lib/saraf-access.ts",
+                 "lib/security.ts",
+                 "lib/sentry-service.ts",
+                 "lib/session-registry.ts",
+                 "lib/sms-service.ts",
+                 "lib/social-features.ts",
+                 "lib/subscription-expiry.ts",
+                 "lib/system-config-security.ts",
+                 "lib/system-health.ts",
+                 "lib/system-monitor.ts",
+                 "lib/technicalIndicators.ts",
+                 "lib/test-utils.tsx",
+                 "lib/transaction-cancellation.ts",
+                 "lib/transaction-pricing.ts",
+                 "lib/transaction-sharing.ts",
+                 "lib/translations-complete.ts",
+                 "lib/unified-notification-service.ts",
+                 "lib/user-reward-service.ts",
+                 "lib/user-settings.ts",
+                 "lib/utils.ts",
+                 "lib/validation.ts",
+                 "lib/vip.ts",
+                 "lib/webhook-service.ts",
+                 "lib/webhook-service-enhanced.ts",
+                 "lib/websocket.ts",
+                 "lib/websocket-server.ts",
+                 "lib/worldCities.ts",
+                 "lib/youtube.ts"
+             ],
+    "contexts":  [
+                     "contexts/LanguageContext.tsx",
+                     "contexts/RealTimeContext.tsx",
+                     "contexts/SystemConfigContext.tsx",
+                     "contexts/ThemeContext.tsx"
+                 ],
+    "hooks":  [
+                  "hooks/useAdaptivePolling.ts",
+                  "hooks/useLanguage.ts",
+                  "hooks/useRealTimeData.ts",
+                  "hooks/useSystemConfig.ts",
+                  "hooks/use-toast.ts",
+                  "hooks/useTranslation.ts",
+                  "hooks/useWebSocket.ts"
+              ],
+    "scripts":  [
+                    "scripts/add-crypto-courses.ts",
+                    "scripts/addSampleData.ts",
+                    "scripts/add-sample-sarafs.ts",
+                    "scripts/autoBackup.bat",
+                    "scripts/checkEmails.ts",
+                    "scripts/clean-next.js",
+                    "scripts/create-admin.js",
+                    "scripts/create-saraf.js",
+                    "scripts/db-migrate.js",
+                    "scripts/finalSystemAudit.ts",
+                    "scripts/initialize-complete-system.ts",
+                    "scripts/initializeContentSystem.ts",
+                    "scripts/initializeDatabase.ts",
+                    "scripts/initializeRealSystem.ts",
+                    "scripts/initializeSystem.ts",
+                    "scripts/prisma-cli.js",
+                    "scripts/prisma-generate.js",
+                    "scripts/realSarafSeed.ts",
+                    "scripts/realSeed.ts",
+                    "scripts/run-next.js",
+                    "scripts/seed.ts",
+                    "scripts/seed-content.js",
+                    "scripts/seedEducation.ts",
+                    "scripts/seed-home-content.ts",
+                    "scripts/seed-packages.ts",
+                    "scripts/seedPersianCourses.ts",
+                    "scripts/testAdminSarafSystems.ts",
+                    "scripts/testContent.ts",
+                    "scripts/testHawalaSystem.ts",
+                    "scripts/test-integration.ts",
+                    "scripts/tests/integration-test.ts",
+                    "scripts/vercel-doctor.js",
+                    "scripts/verifyCredentials.ts"
+                ],
+    "tests":  [
+                  "tests/account-lockout.test.ts",
+                  "tests/api-response.test.ts",
+                  "tests/business-validation.test.ts",
+                  "tests/cache.test.ts",
+                  "tests/config-encryption.test.ts",
+                  "tests/exchange-feature-flags.test.ts",
+                  "tests/export.test.ts",
+                  "tests/logger.test.ts",
+                  "tests/otp-security.test.ts",
+                  "tests/pagination.test.ts",
+                  "tests/phone.test.ts",
+                  "tests/redis.test.ts",
+                  "tests/saraf-access.test.ts",
+                  "tests/security.test.ts",
+                  "tests/validation.test.ts",
+                  "tests/vip.test.ts",
+                  "tests/webhook.test.ts"
+              ],
+    "envExampleKeys":  [
+                           "AUTO_BACKUP_INTERVAL",
+                           "BACKUP_DIR",
+                           "BLOB_READ_WRITE_TOKEN",
+                           "COINGECKO_API",
+                           "CRON_SECRET",
+                           "DATABASE_URL",
+                           "ENABLE_2FA",
+                           "ENABLE_CAPTCHA",
+                           "ENABLE_EMAIL_VERIFICATION",
+                           "ENABLE_REGISTRATION",
+                           "ENABLE_SMS_VERIFICATION",
+                           "EXCHANGE_API",
+                           "FACEBOOK_ACCESS_TOKEN",
+                           "FACEBOOK_PAGE_ID",
+                           "INIT_ADMIN_EMAIL",
+                           "INIT_ADMIN_PASSWORD",
+                           "LOG_LEVEL",
+                           "MAX_FILE_SIZE",
+                           "NEXT_PUBLIC_API_URL",
+                           "NEXT_PUBLIC_APP_URL",
+                           "NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+                           "NEXT_PUBLIC_WS_URL",
+                           "NEXTAUTH_SECRET",
+                           "NEXTAUTH_URL",
+                           "NODE_ENV",
+                           "RATE_LIMIT_MAX_REQUESTS",
+                           "RATE_LIMIT_WINDOW_MS",
+                           "RECAPTCHA_MIN_SCORE",
+                           "RECAPTCHA_SECRET_KEY",
+                           "SENTRY_AUTH_TOKEN",
+                           "SENTRY_DSN",
+                           "SESSION_MAX_AGE",
+                           "SMTP_FROM",
+                           "SMTP_HOST",
+                           "SMTP_PASS",
+                           "SMTP_PORT",
+                           "SMTP_USER",
+                           "SYSTEM_CONFIG_ENCRYPTION_KEY",
+                           "TWILIO_ACCOUNT_SID",
+                           "TWILIO_AUTH_TOKEN",
+                           "TWILIO_FROM_NUMBER",
+                           "TWILIO_WHATSAPP_FROM",
+                           "UPLOAD_DIR",
+                           "UPSTASH_REDIS_REST_TOKEN",
+                           "UPSTASH_REDIS_REST_URL"
+                       ]
+}

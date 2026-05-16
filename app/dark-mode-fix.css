@@ -1,0 +1,13 @@
+/* Dark Mode Text Visibility Fixes */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+    background-color: #020617 !important;
+}
+
+/* 
+   Aggressive global overrides removed to allow component-level 
+   Tailwind utility classes (e.g., dark:text-slate-950) to work.
+*/

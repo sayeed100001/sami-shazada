@@ -1,0 +1,271 @@
+/* Mobile-First Responsive Charts Page */
+
+/* Base mobile styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Chart container - mobile first */
+.chart-container {
+  flex: 1;
+  min-height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+/* TradingView widget mobile optimization */
+.tradingview-widget-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 300px;
+}
+
+.tradingview-widget-container__widget {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Mobile toolbar optimizations */
+@media (max-width: 767px) {
+  .chart-toolbar {
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .chart-toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .timeframe-buttons {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .timeframe-buttons::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .timeframe-button {
+    min-width: 40px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+  
+  .chart-type-buttons {
+    display: flex;
+    gap: 0.25rem;
+  }
+  
+  .chart-type-button {
+    padding: 0.25rem;
+    min-width: 32px;
+  }
+  
+  .asset-selector-mobile {
+    max-width: 180px;
+    font-size: 0.75rem;
+  }
+  
+  .connection-status-mobile {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chart-container {
+    min-height: 400px;
+  }
+  
+  .sidebar-width {
+    width: 280px;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .chart-container {
+    min-height: 500px;
+  }
+  
+  .sidebar-width {
+    width: 320px;
+  }
+}
+
+/* Sidebar responsive behavior */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+  .sidebar-overlay {
+    position: relative;
+    background: transparent;
+  }
+}
+
+/* Chart loading states */
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: #0f172a;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .chart-loading {
+    min-height: 400px;
+  }
+}
+
+/* Touch-friendly button sizes */
+@media (max-width: 767px) {
+  .touch-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem;
+  }
+  
+  .touch-button-small {
+    min-height: 36px;
+    min-width: 36px;
+    padding: 0.25rem;
+  }
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 767px) {
+  .no-scroll-x {
+    overflow-x: hidden;
+  }
+  
+  .scroll-x-auto {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .scroll-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Chart info overlay mobile positioning */
+@media (max-width: 767px) {
+  .chart-info-overlay {
+    top: 0.5rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Mobile sheet/drawer optimizations */
+.mobile-sheet {
+  width: 100vw;
+  max-width: 100vw;
+}
+
+@media (min-width: 640px) {
+  .mobile-sheet {
+    width: 320px;
+    max-width: 320px;
+  }
+}
+
+/* Tabs responsive behavior */
+@media (max-width: 767px) {
+  .tabs-mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+  }
+  
+  .tab-trigger-mobile {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .tabs-desktop {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .tab-trigger-desktop {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}
+
+/* Ensure proper height on mobile */
+@media (max-width: 767px) {
+  .mobile-full-height {
+    height: calc(100vh - 4rem);
+    min-height: calc(100vh - 4rem);
+  }
+  
+  .mobile-chart-height {
+    height: calc(100vh - 8rem);
+    min-height: calc(100vh - 8rem);
+  }
+}
+
+/* Price labels responsive */
+.price-sidebar {
+  min-width: 60px;
+  max-width: 120px;
+  width: 15%;
+}
+
+@media (min-width: 768px) {
+  .price-sidebar {
+    min-width: 80px;
+    max-width: 160px;
+    width: 20%;
+  }
+}
+
+/* Animation optimizations for mobile */
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin {
+    animation: none;
+  }
+  
+  .animate-pulse {
+    animation: none;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .chart-container {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

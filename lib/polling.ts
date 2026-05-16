@@ -1,0 +1,18 @@
+export const POLLING_INTERVALS = {
+  chatMessagesActiveMs: 10_000,
+  chatMessagesIdleMs: 20_000,
+  chatSessionsActiveMs: 20_000,
+  chatSessionsIdleMs: 45_000,
+  quickBadgeActiveMs: 60_000,
+  quickBadgeIdleMs: 180_000,
+  notificationsActiveMs: 60_000,
+  notificationsIdleMs: 180_000,
+  adminStatsActiveMs: 120_000,
+  adminStatsIdleMs: 300_000,
+  portalStatsActiveMs: 120_000,
+  portalStatsIdleMs: 300_000,
+  publicContentActiveMs: 300_000,
+  publicContentIdleMs: 600_000,
+  marketDataActiveMs: 120_000,
+  marketDataIdleMs: 300_000,
+} as const
